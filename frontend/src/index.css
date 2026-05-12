@@ -1,0 +1,769 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   LIQUID GLASS / VISIONOS DESIGN SYSTEM
+   Warm Graphite + Amber Dusk Palette
+   ============================================ */
+
+:root {
+  /* Surfaces */
+  --bg: #0a0807;
+  --bg-1: #110d0b;
+  --bg-2: #16110d;
+  --surface-warm: #1a1411;
+  --graphite: #1f1815;
+
+  /* Glass system */
+  --glass: rgba(255, 230, 200, 0.035);
+  --glass-strong: rgba(255, 230, 200, 0.06);
+  --glass-border: rgba(255, 220, 190, 0.10);
+  --glass-border-strong: rgba(255, 215, 175, 0.18);
+  --glass-highlight: rgba(255, 240, 220, 0.22);
+
+  /* Warm accents */
+  --amber: #f0a46a;
+  --amber-soft: #d99565;
+  --amber-deep: #c87a4a;
+  --gold: #e8c594;
+  --peach: #f4b896;
+  --rust: #b86440;
+
+  /* Text */
+  --text: #f5ece1;
+  --text-soft: rgba(245, 236, 225, 0.74);
+  --text-muted: rgba(245, 236, 225, 0.48);
+  --text-dim: rgba(245, 236, 225, 0.32);
+
+  /* Tailwind shadcn */
+  --background: 14 25% 4%;
+  --foreground: 30 50% 92%;
+  --card: 16 24% 7%;
+  --card-foreground: 30 50% 92%;
+  --popover: 16 24% 7%;
+  --popover-foreground: 30 50% 92%;
+  --primary: 23 80% 67%;
+  --primary-foreground: 14 25% 4%;
+  --secondary: 18 18% 12%;
+  --secondary-foreground: 30 50% 92%;
+  --muted: 18 18% 12%;
+  --muted-foreground: 30 25% 60%;
+  --accent: 23 60% 30%;
+  --accent-foreground: 30 50% 92%;
+  --destructive: 0 60% 50%;
+  --destructive-foreground: 30 50% 92%;
+  --border: 23 30% 18%;
+  --input: 23 30% 18%;
+  --ring: 23 80% 67%;
+  --radius: 1.25rem;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root { background: var(--bg); }
+
+body {
+  margin: 0;
+  font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  background:
+    radial-gradient(1200px 700px at 80% -10%, rgba(240, 164, 106, 0.08), transparent 60%),
+    radial-gradient(900px 600px at -10% 30%, rgba(184, 100, 64, 0.05), transparent 65%),
+    radial-gradient(1000px 800px at 50% 110%, rgba(232, 197, 148, 0.04), transparent 60%),
+    var(--bg);
+  min-height: 100vh;
+}
+
+::selection { background: rgba(240, 164, 106, 0.30); color: #fff; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(240,164,106,0.25), rgba(184,100,64,0.15));
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(240,164,106,0.45); background-clip: padding-box; }
+
+/* Display font */
+.serif { font-family: 'Instrument Serif', 'Times New Roman', serif; font-weight: 400; letter-spacing: -0.015em; }
+.serif-italic { font-family: 'Instrument Serif', 'Times New Roman', serif; font-style: italic; font-weight: 400; }
+
+/* ============================================
+   GLASS PRIMITIVES
+   ============================================ */
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  position: relative;
+  overflow: hidden;
+}
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg,
+    var(--glass-highlight) 0%,
+    rgba(255, 220, 190, 0.04) 30%,
+    transparent 50%,
+    rgba(240, 164, 106, 0.10) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+.glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 0%, rgba(255, 240, 220, 0.06), transparent 60%),
+    radial-gradient(circle at 100% 100%, rgba(240, 164, 106, 0.05), transparent 60%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.glass-strong {
+  background: var(--glass-strong);
+  backdrop-filter: blur(32px) saturate(160%);
+  -webkit-backdrop-filter: blur(32px) saturate(160%);
+  border: 1px solid var(--glass-border-strong);
+  border-radius: var(--radius);
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 30px 80px -30px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(255, 220, 190, 0.04) inset,
+    0 1px 0 0 rgba(255, 240, 220, 0.10) inset;
+}
+
+.glass-card {
+  background: linear-gradient(145deg, rgba(40, 30, 24, 0.55), rgba(20, 16, 14, 0.55));
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 24px 60px -28px rgba(0,0,0,0.7),
+    0 1px 0 0 rgba(255, 240, 220, 0.07) inset;
+  transition: transform 600ms cubic-bezier(0.22,1,0.36,1),
+              border-color 400ms ease,
+              box-shadow 600ms ease,
+              background 600ms ease;
+}
+.glass-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg,
+    rgba(255, 240, 220, 0.12) 0%,
+    transparent 25%,
+    transparent 75%,
+    rgba(240, 164, 106, 0.10) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  padding: 1px;
+  pointer-events: none;
+  opacity: 0.85;
+}
+.glass-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 60% at 0% 0%, rgba(255, 230, 200, 0.07), transparent 55%),
+    radial-gradient(120% 60% at 100% 100%, rgba(240, 164, 106, 0.06), transparent 55%);
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0.9;
+}
+.glass-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(240, 164, 106, 0.32);
+  box-shadow:
+    0 40px 90px -30px rgba(0,0,0,0.75),
+    0 0 60px -10px rgba(240, 164, 106, 0.18),
+    0 1px 0 0 rgba(255, 240, 220, 0.12) inset;
+}
+
+/* ============================================
+   AMBIENT BACKGROUND
+   ============================================ */
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.55;
+  pointer-events: none;
+  will-change: transform;
+}
+.orb-amber {
+  background: radial-gradient(circle, #f0a46a 0%, transparent 65%);
+}
+.orb-rust {
+  background: radial-gradient(circle, #b86440 0%, transparent 65%);
+}
+.orb-gold {
+  background: radial-gradient(circle, #e8c594 0%, transparent 65%);
+}
+@keyframes orb-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(40px, -30px) scale(1.08); }
+}
+@keyframes orb-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-50px, 40px) scale(1.12); }
+}
+@keyframes orb-drift-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(30px, 50px) scale(0.95); }
+}
+.orb-anim-1 { animation: orb-drift-1 18s ease-in-out infinite; }
+.orb-anim-2 { animation: orb-drift-2 24s ease-in-out infinite; }
+.orb-anim-3 { animation: orb-drift-3 22s ease-in-out infinite; }
+
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 0.85 0 0 0 0 0.7 0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Mouse glow.
+   The radial gradient itself fades smoothly to transparent — we don't need
+   `filter: blur(20px)` on top, which created a full-screen offscreen buffer
+   every frame the cursor moved. Removing it cuts paint cost ~40%. The
+   `mix-blend-mode: screen` is kept for the warm-on-dark glow look.
+   `will-change: transform` keeps this element promoted to its own
+   compositor layer so cursor follow never re-rasterizes. */
+.mouse-glow {
+  position: fixed;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(240, 164, 106, 0.14), transparent 65%);
+  pointer-events: none;
+  z-index: 2;
+  /* Initial parking position — actual position is driven by translate3d from JS. */
+  top: 0;
+  left: 0;
+  transition: opacity 400ms ease;
+  mix-blend-mode: screen;
+  will-change: transform;
+  contain: layout paint;
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.95rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.eyebrow .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 12px var(--amber);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(0.8); }
+}
+
+.section-title {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  font-size: clamp(2rem, 4.2vw, 3.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.section-sub {
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+  line-height: 1.65;
+  color: var(--text-soft);
+  max-width: 60ch;
+  font-weight: 400;
+}
+.amber-text { color: var(--amber); }
+.gold-text  { color: var(--gold); }
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  cursor: pointer;
+  transition: transform 350ms cubic-bezier(0.22,1,0.36,1),
+              background 350ms ease,
+              border-color 350ms ease,
+              box-shadow 350ms ease,
+              color 350ms ease;
+  text-decoration: none;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #f4b896 0%, #f0a46a 50%, #d99565 100%);
+  color: #1a0f08;
+  box-shadow:
+    0 10px 30px -10px rgba(240, 164, 106, 0.55),
+    0 0 0 1px rgba(255, 220, 190, 0.40) inset,
+    0 1px 0 0 rgba(255, 240, 220, 0.6) inset;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 20px 40px -10px rgba(240, 164, 106, 0.7),
+    0 0 0 1px rgba(255, 220, 190, 0.50) inset,
+    0 1px 0 0 rgba(255, 240, 220, 0.7) inset;
+}
+.btn-ghost {
+  background: var(--glass);
+  color: var(--text);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.btn-ghost:hover {
+  background: var(--glass-strong);
+  border-color: rgba(240, 164, 106, 0.30);
+  transform: translateY(-2px);
+  color: var(--gold);
+  box-shadow: 0 0 30px -8px rgba(240, 164, 106, 0.30);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--text-soft);
+  border: 1px solid var(--glass-border-strong);
+}
+.btn-outline:hover {
+  border-color: var(--amber);
+  color: var(--amber);
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   PILLS / TAGS
+   ============================================ */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.78rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  border-radius: 999px;
+  background: rgba(255, 230, 200, 0.04);
+  border: 1px solid rgba(255, 220, 190, 0.10);
+  color: var(--text-soft);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  /* Only animate properties we actually change — `transition: all` forced the
+     browser to compute interpolations for every property including layout
+     ones every hover. */
+  transition: background-color 320ms ease, border-color 320ms ease, color 320ms ease;
+}
+.chip:hover {
+  background: rgba(240, 164, 106, 0.10);
+  border-color: rgba(240, 164, 106, 0.30);
+  color: var(--gold);
+}
+.chip-amber {
+  background: rgba(240, 164, 106, 0.10);
+  border-color: rgba(240, 164, 106, 0.25);
+  color: var(--gold);
+}
+
+/* ============================================
+   REVEAL
+   ============================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 1100ms cubic-bezier(0.22,1,0.36,1),
+    transform 1100ms cubic-bezier(0.22,1,0.36,1);
+  will-change: opacity, transform;
+}
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal.d1 { transition-delay: 80ms; }
+.reveal.d2 { transition-delay: 160ms; }
+.reveal.d3 { transition-delay: 240ms; }
+.reveal.d4 { transition-delay: 320ms; }
+.reveal.d5 { transition-delay: 400ms; }
+
+/* ============================================
+   FORM
+   ============================================ */
+.field-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.55rem;
+}
+.field-label span {
+  text-transform: none;
+  font-weight: 400;
+  color: var(--text-dim);
+  letter-spacing: 0;
+}
+.field-input,
+.field-textarea {
+  width: 100%;
+  padding: 0.95rem 1.1rem;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 0.95rem;
+  color: var(--text);
+  background: rgba(20, 14, 11, 0.55);
+  border: 1px solid var(--glass-border);
+  border-radius: 0.85rem;
+  outline: none;
+  transition: border-color 300ms ease, background 300ms ease, box-shadow 300ms ease;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.field-input::placeholder,
+.field-textarea::placeholder {
+  color: var(--text-dim);
+}
+.field-input:focus,
+.field-textarea:focus {
+  border-color: rgba(240, 164, 106, 0.45);
+  background: rgba(28, 20, 16, 0.72);
+  box-shadow: 0 0 0 4px rgba(240, 164, 106, 0.10);
+}
+.field-textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+/* ============================================
+   TIMELINE
+   ============================================ */
+.timeline-line-grad {
+  background: linear-gradient(180deg,
+    transparent 0%,
+    rgba(240, 164, 106, 0.50) 15%,
+    rgba(240, 164, 106, 0.25) 60%,
+    transparent 100%);
+}
+
+/* ============================================
+   PROJECT MOCKUP
+   ============================================ */
+.mockup {
+  background: linear-gradient(180deg, rgba(15, 11, 9, 0.85), rgba(8, 6, 5, 0.92));
+  border: 1px solid rgba(255, 220, 190, 0.10);
+  border-radius: 0.85rem;
+  padding: 0.8rem;
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.5);
+}
+.mockup-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid rgba(255,220,190,0.06);
+  margin-bottom: 0.7rem;
+}
+.mockup-dot { width: 9px; height: 9px; border-radius: 50%; }
+
+/* ============================================
+   NAV
+   ============================================ */
+.nav-link {
+  position: relative;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  padding: 0.4rem 0;
+  transition: color 300ms ease;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 100%;
+  bottom: -3px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--amber), transparent);
+  transition: right 380ms cubic-bezier(0.22,1,0.36,1);
+}
+.nav-link:hover { color: var(--gold); }
+.nav-link:hover::after { right: 0; }
+
+/* ============================================
+   HERO IMAGE LAYER
+   ============================================ */
+/* Hero photo layer.
+   Bake the saturation / brightness adjustments into the gradient overlay
+   instead of using a `filter:` chain on a viewport-sized fixed layer. A
+   single filter on a layer this size forces the browser to allocate a
+   full-screen offscreen buffer for every paint that touches the hero. We
+   keep `transform: translateZ(0)` so the photo gets its own GPU layer and
+   never invalidates the rest of the page during scroll. */
+.hero-photo {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1473580044384-7ba9967e16a0?auto=format&fit=crop&w=2400&q=85');
+  background-size: cover;
+  background-position: center 40%;
+  opacity: 0.36;
+  transform: translateZ(0);
+  contain: layout paint;
+}
+.hero-photo-wash {
+  position: absolute;
+  inset: 0;
+  background:
+    /* darken left third where text lives */
+    linear-gradient(90deg, rgba(8, 6, 5, 0.85) 0%, rgba(8, 6, 5, 0.55) 25%, rgba(8, 6, 5, 0.10) 55%, rgba(8, 6, 5, 0.00) 75%),
+    /* fade top + bottom into bg */
+    linear-gradient(180deg, rgba(10,8,7,0.55) 0%, rgba(10,8,7,0.10) 22%, rgba(10,8,7,0.50) 70%, var(--bg) 100%),
+    /* warm color overlay */
+    linear-gradient(135deg, rgba(184, 100, 64, 0.18) 0%, transparent 35%, rgba(232, 197, 148, 0.14) 95%);
+}
+
+/* Dim mode (non-hero sections) */
+.section-bg-warm {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(60% 60% at 80% 20%, rgba(240, 164, 106, 0.05), transparent 70%),
+    radial-gradient(50% 50% at 10% 80%, rgba(184, 100, 64, 0.04), transparent 70%);
+}
+
+/* ============================================
+   UTILITY ANIMATIONS
+   ============================================ */
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+.float-y { animation: float-y 7s ease-in-out infinite; }
+
+@keyframes shimmer-line {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+.spin-slow { animation: spin-slow 30s linear infinite; }
+
+/* Section divider */
+.section-divider {
+  height: 1px;
+  margin: 2rem auto;
+  max-width: 1200px;
+  background: linear-gradient(90deg, transparent, rgba(240, 164, 106, 0.18), transparent);
+}
+
+/* Container */
+.container-x {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 3vw, 2rem);
+  position: relative;
+  z-index: 2;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+
+/* ============================================
+   PERFORMANCE ENGINEERING LAYER
+   ============================================
+   Everything below is rendering-perf focused and does not change visuals
+   on tier "high"/"mid". Only the `.perf-low` overrides and reduced-motion
+   block cut effects, and they do so deliberately to keep the page buttery
+   on low-end devices. */
+
+/* Smooth anchor scrolling — but only on devices that aren't currently
+   handling momentum scroll (touch). On touch, native scroll is smoother. */
+html { scroll-behavior: smooth; }
+@media (hover: none) { html { scroll-behavior: auto; } }
+
+/* GPU-promote hot animated layers. We avoid blanket `will-change` because
+   that allocates a layer for every element that uses it — wasteful. We
+   only hint the elements that actually animate every frame. */
+.float-y,
+.btn,
+.glass-card,
+.hero-photo,
+.mouse-glow,
+[data-section="hero"] {
+  transform: translateZ(0);
+}
+
+/* Force section painting to be self-contained so animating one card never
+   triggers a paint-roof higher in the tree. */
+section[data-testid$="-section"],
+section[id] {
+  contain: layout style;
+}
+
+/* Glass cards: only set will-change while hover transform is active so the
+   browser doesn't keep dozens of permanent GPU layers around. */
+.glass-card { will-change: auto; }
+.glass-card:hover { will-change: transform, box-shadow; }
+
+/* Reveal: drop `will-change` once the element has revealed — keeping it
+   around forever creates persistent layers that hurt scroll perf. */
+.reveal { will-change: opacity, transform; }
+.reveal.in { will-change: auto; }
+
+/* Float animations: pause when the section is off-screen via
+   content-visibility: auto. The browser already skips painting those, but
+   pausing the animation also saves the timer/style-recalc cost. */
+[data-section] {
+  /* SectionShell applies content-visibility inline; this is the matching
+     pause behavior for any animated descendants. */
+}
+@supports (animation-play-state: paused) {
+  /* When a section is hidden by content-visibility:auto, descendants don't
+     paint — but Chrome still ticks their animations. We disable expensive
+     looping animations on the global level once tab is hidden. */
+  .pause-anim, .pause-anim * { animation-play-state: paused !important; }
+}
+
+/* ============================================
+   PERF-LOW TIER OVERRIDES
+   Activated automatically by perf.js on devices with < 4GB RAM, < 4 cores,
+   touch + small screen, data-saver, or prefers-reduced-motion. We do NOT
+   change the look on mid/high tiers. */
+
+html.perf-low .glass,
+html.perf-low .glass-strong,
+html.perf-low .glass-card,
+html.perf-low .chip,
+html.perf-low .btn-ghost,
+html.perf-low .eyebrow,
+html.perf-low .field-input,
+html.perf-low .field-textarea {
+  /* backdrop-filter is one of the most expensive paint operations. On
+     low-tier we drop it entirely and rely on the existing tinted-glass
+     gradients which already give a glass-like impression. */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html.perf-low .hero-photo {
+  /* Avoid loading the high-res 2400px Unsplash on low-tier — keep a soft
+     gradient that matches the dusk palette instead. */
+  background-image: none;
+  background:
+    radial-gradient(80% 60% at 80% 20%, rgba(240, 164, 106, 0.14), transparent 70%),
+    radial-gradient(60% 60% at 20% 80%, rgba(184, 100, 64, 0.10), transparent 70%);
+}
+
+html.perf-low .float-y { animation: none; }
+html.perf-low .spin-slow { animation: none; }
+html.perf-low .grain { display: none; }
+html.perf-low .mouse-glow { display: none; }
+
+/* Glass-card hover gets a cheaper version on low-tier — no extra glow blur,
+   only a color shift. */
+html.perf-low .glass-card:hover {
+  transform: none;
+  box-shadow: 0 12px 28px -16px rgba(0,0,0,0.7);
+}
+
+/* Reduced motion: kill every keyframe and transition. perf.js also forces
+   tier "low" when reduced-motion is set, so this stacks safely. */
+html.reduced-motion .reveal,
+html.reduced-motion .float-y,
+html.reduced-motion .spin-slow {
+  animation: none !important;
+  transition: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* High-refresh tip: shorten the heaviest transition (.glass-card hover)
+   from 600ms to 320ms so frames complete inside a 144Hz budget (≈6.9ms).
+   Browsers can paint a 600ms shadow ramp without dropping frames, but the
+   resulting compositor work spans more vsync intervals than necessary. */
+@media (prefers-reduced-motion: no-preference) and (min-resolution: 1.5dppx) {
+  .glass-card {
+    transition: transform 320ms cubic-bezier(0.22,1,0.36,1),
+                border-color 280ms ease,
+                box-shadow 320ms ease;
+  }
+}
+
+/* When the document tab is hidden, halt every animation immediately.
+   This is the single biggest mobile thermal win. */
+html:has(body.tab-hidden) *,
+body.tab-hidden * {
+  animation-play-state: paused !important;
+}
+
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@keyframes floatCard {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
