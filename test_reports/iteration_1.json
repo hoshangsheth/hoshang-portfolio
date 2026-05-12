@@ -22,6 +22,6 @@
   "seed_data_creation": "None",
   "retest_needed": false,
   "should_main_agent_self_test": true,
-  "context_for_next_testing_agent": "Pure frontend portfolio. Backend not used. Public URL: https://2b636ace-d33d-413c-b7d7-217ac2542d27.preview.emergentagent.com. All data-testids verified present. Reveal animations gated behind IntersectionObserver in /app/frontend/src/hooks/useReveal.js with a 2.5s safety-net fallback. Contact form posts via JS fetch to https://formspree.io/f/xojrkygl (do NOT actually submit during tests).",
+  "context_for_next_testing_agent": "Pure frontend portfolio. Backend not used. Public URL: https://projects-modal.preview.emergentagent.com. All data-testids verified present. Reveal animations gated behind IntersectionObserver in /app/frontend/src/hooks/useReveal.js with a 2.5s safety-net fallback. Contact form posts via JS fetch to https://formspree.io/f/xojrkygl (do NOT actually submit during tests).",
   "rca of the issue": "No issues found — all listed acceptance criteria pass."
 }

@@ -158,6 +158,19 @@ export const PROJECTS_SMALL = [
   },
 ];
 
+// Additional projects shown inside the "View More Projects" modal.
+// Add new project entries here following the same structure as PROJECTS_SMALL.
+// Example object:
+// {
+//   tag: "Category · Tech · Framework",
+//   title: "Project Title",
+//   desc: "Short description of what the project does and its impact.",
+//   stack: ["Tag1","Tag2","Tag3"],
+//   github: "https://github.com/...",
+//   live: "https://...",   // optional — omit if no live link
+// },
+export const PROJECTS_EXTRA = [];
+
 export const TIMELINE = [
   { date: "2026 — Present", title: "Gen AI & AI Engineering", org: "Independent Learning · System Building",
     desc: "Transitioning from traditional Machine Learning into modern AI engineering through hands-on development of Gen AI applications, RAG systems, AI agents, FastAPI services, and production-focused intelligent systems.",
