@@ -14,7 +14,7 @@ function Footer() {
             </div>
             <div>
               <div className="font-medium text-sm">Hoshang Sheth</div>
-              <div className="text-[0.75rem] text-[var(--text-muted)]">AI &amp; ML Engineer · Mumbai, India</div>
+              <div className="text-[0.75rem] text-[var(--text-muted)]">Gen AI Engineer · Mumbai, India</div>
             </div>
           </div>
 
