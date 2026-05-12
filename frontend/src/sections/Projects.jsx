@@ -1,11 +1,11 @@
-import { memo, useEffect, useState, useCallback } from "react";
-import { ArrowRight, ArrowUpRight, X } from "lucide-react";
+import { memo, useCallback, useState } from "react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { PROJECTS_LARGE, PROJECTS_SMALL, PROJECTS_EXTRA } from "./data";
 import { ProjectMockup } from "./primitives";
+import AnimatedModal from "../components/AnimatedModal";
 
 const ProjectLarge = memo(function ProjectLarge({ project, reverse, index }) {
   const p = project;
-  // Pre-computed per-card background so we don't re-evaluate on every paint.
   const bg =
     index === 0 ? "linear-gradient(135deg, #1a1310 0%, #21160f 50%, #19120e 100%)"
     : index === 1 ? "linear-gradient(135deg, #1f1410 0%, #2a1a12 50%, #1d130f 100%)"
@@ -71,8 +71,7 @@ const ProjectLarge = memo(function ProjectLarge({ project, reverse, index }) {
   );
 });
 
-// Reusable small project card — identical structure to those rendered in the
-// "More Projects" grid so the modal stays visually consistent.
+// Reusable small project card — identical to those in the "More Projects" grid.
 function SmallProjectCard({ p }) {
   return (
     <div className="glass-card p-6 rounded-2xl flex flex-col">
@@ -110,105 +109,12 @@ function SmallProjectCard({ p }) {
   );
 }
 
-function MoreProjectsModal({ open, onClose, projects }) {
-  // Close on Escape key
-  useEffect(() => {
-    if (!open) return;
-    const handler = (e) => { if (e.key === "Escape") onClose(); };
-    window.addEventListener("keydown", handler);
-    // Lock body scroll while modal is open
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", handler);
-      document.body.style.overflow = prevOverflow;
-    };
-  }, [open, onClose]);
-
-  if (!open) return null;
-
-  const hasProjects = Array.isArray(projects) && projects.length > 0;
-
-  return (
-    <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
-      role="dialog"
-      aria-modal="true"
-      aria-label="More projects"
-      data-testid="more-projects-modal"
-    >
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: "rgba(8, 5, 3, 0.72)",
-          backdropFilter: "blur(10px)",
-          WebkitBackdropFilter: "blur(10px)",
-        }}
-        onClick={onClose}
-      />
-
-      {/* Modal panel */}
-      <div
-        className="relative glass-card rounded-[24px] w-full max-w-5xl max-h-[88vh] flex flex-col overflow-hidden"
-        style={{
-          background: "linear-gradient(135deg, #1a1310 0%, #1d150f 50%, #15110d 100%)",
-        }}
-      >
-        {/* Soft amber glow */}
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{ background: "radial-gradient(120% 80% at 80% 0%, rgba(240,164,106,0.14), transparent 60%)" }}
-        />
-
-        {/* Header */}
-        <div className="relative flex items-start justify-between gap-4 p-6 md:p-8 border-b border-[var(--glass-border)]">
-          <div>
-            <div className="eyebrow"><span className="dot" /> All Projects</div>
-            <h3 className="serif text-2xl md:text-3xl mt-3 leading-tight">
-              Explore More
-              <span className="serif-italic amber-text"> Work</span>
-            </h3>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Close more projects"
-            className="btn btn-ghost"
-            style={{ padding: "0.55rem 0.7rem" }}
-            data-testid="more-projects-close"
-          >
-            <X size={16} />
-          </button>
-        </div>
-
-        {/* Body */}
-        <div className="relative overflow-y-auto p-6 md:p-8">
-          {hasProjects ? (
-            <div className="grid md:grid-cols-2 gap-5" data-testid="more-projects-grid">
-              {projects.map((p) => (
-                <SmallProjectCard key={p.title} p={p} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <div className="serif-italic amber-text text-xl">More projects coming soon</div>
-              <p className="mt-3 text-[var(--text-soft)] text-[0.92rem] max-w-md mx-auto leading-relaxed">
-                New work is currently being added. Check back shortly to see additional
-                Machine Learning and Gen AI projects.
-              </p>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function Projects() {
   const [modalOpen, setModalOpen] = useState(false);
   const openModal = useCallback(() => setModalOpen(true), []);
   const closeModal = useCallback(() => setModalOpen(false), []);
+
+  const hasExtra = Array.isArray(PROJECTS_EXTRA) && PROJECTS_EXTRA.length > 0;
 
   return (
     <section id="projects" className="relative py-24 md:py-32" data-testid="projects-section">
@@ -274,7 +180,6 @@ function Projects() {
             ))}
           </div>
 
-          {/* View More Projects button */}
           <div className="reveal mt-10 flex justify-center">
             <button
               type="button"
@@ -288,7 +193,30 @@ function Projects() {
         </div>
       </div>
 
-      <MoreProjectsModal open={modalOpen} onClose={closeModal} projects={PROJECTS_EXTRA} />
+      <AnimatedModal
+        open={modalOpen}
+        onClose={closeModal}
+        eyebrow="All Projects"
+        title="Explore More"
+        titleAccent="Work"
+        testId="more-projects-modal"
+      >
+        {hasExtra ? (
+          <div className="grid md:grid-cols-2 gap-5" data-testid="more-projects-grid">
+            {PROJECTS_EXTRA.map((p) => (
+              <SmallProjectCard key={p.title} p={p} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <div className="serif-italic amber-text text-xl">More projects coming soon</div>
+            <p className="mt-3 text-[var(--text-soft)] text-[0.92rem] max-w-md mx-auto leading-relaxed">
+              New work is currently being added. Check back shortly to see additional
+              Machine Learning and Gen AI projects.
+            </p>
+          </div>
+        )}
+      </AnimatedModal>
     </section>
   );
 }

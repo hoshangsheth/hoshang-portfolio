@@ -204,6 +204,17 @@ export const CERTS = [
     link: "https://drive.google.com/file/d/1_W8wClSb0kXJpPzY0_bT_IX_kcNYEmnP/view?usp=drive_link" },
 ];
 
+// Additional certifications shown inside the "View More Certifications" modal.
+// Add new entries here following the same structure as CERTS.
+// Example object:
+// {
+//   icon: BadgeCheck,        // any icon imported above (BadgeCheck, Database, BrainCircuit, etc.)
+//   title: "Certificate Title",
+//   issuer: "Issuer · Date",
+//   link: "https://...",
+// },
+export const CERTS_EXTRA = [];
+
 export const STACK = [
   { icon: BrainCircuit, name: "AI / ML",
     items: ["Scikit-learn","XGBoost","TensorFlow / Keras","SHAP","HuggingFace","NLP / Transformers"] },
